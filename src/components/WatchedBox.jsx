@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import WatchedSummary from './WatchedSummary';
 
 const tempWatchedData = [
     {
@@ -21,15 +22,9 @@ const tempWatchedData = [
     },
 ];
 
-const average = (arr) =>
-    arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
-
 const WatchedBox = () => {
     const [watched, setWatched] = useState(tempWatchedData);
     const [isOpen2, setIsOpen2] = useState(true);
-    const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
-    const avgUserRating = average(watched.map((movie) => movie.userRating));
-    const avgRuntime = average(watched.map((movie) => movie.runtime));
 
     return (
         <div className='box'>
@@ -41,28 +36,7 @@ const WatchedBox = () => {
             </button>
             {isOpen2 && (
                 <>
-                    <div className='summary'>
-                        <h2>Movies you watched</h2>
-                        <div>
-                            <p>
-                                <span>#️⃣</span>
-                                <span>{watched.length} movies</span>
-                            </p>
-                            <p>
-                                <span>⭐️</span>
-                                <span>{avgImdbRating}</span>
-                            </p>
-                            <p>
-                                <span>🌟</span>
-                                <span>{avgUserRating}</span>
-                            </p>
-                            <p>
-                                <span>⏳</span>
-                                <span>{avgRuntime} min</span>
-                            </p>
-                        </div>
-                    </div>
-
+                    <WatchedSummary watched={watched} />
                     <ul className='list'>
                         {watched.map((movie) => (
                             <li key={movie.imdbID}>
