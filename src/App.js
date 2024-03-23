@@ -9,15 +9,19 @@ import WatchedSummary from './components/WatchedSummary';
 import WatchedList from './components/WatchedList';
 
 const KEY = 'f84fc31d';
+const query = 'interstellar';
 
 function App() {
  const [movies, setMovies] = useState([]);
  const [watched, setWatched] = useState([]);
 
  useEffect(() => {
-  fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
-   .then((res) => res.json())
-   .then((data) => setMovies(data.Search));
+  const fetchMovies = async () => {
+   const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
+   const data = await res.json();
+   setMovies(data.Search);
+  };
+  fetchMovies();
  }, []);
 
  return (
